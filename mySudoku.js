@@ -1,4 +1,17 @@
 window.onload = function(){
+    
+    let initString =    `
+                            0 0 0  0 0 0  0 0 0 
+                            0 0 0  0 0 0  0 0 0
+                            0 0 0  0 0 0  0 0 0
+                            0 0 0  0 0 0  0 0 0 
+                            0 0 0  0 0 0  0 0 0
+                            0 0 0  0 0 0  0 0 0
+                            0 0 0  0 0 0  0 0 0 
+                            0 0 0  0 0 0  0 0 0
+                            0 0 0  0 0 0  0 0 0
+                        `;
+
 
     let btn = document.querySelectorAll(".btn");
     console.log(btn);
@@ -8,10 +21,10 @@ window.onload = function(){
         for(let i = 0; i < btn.length; i++){
             e.addEventListener('click', clickHandler, false);
         }
-        
     });
     
     function clickHandler(e){
+            document.querySelector('#8').value = 9;
             console.log(e.target.dataset);
             let target = e.target.dataset
 
@@ -55,23 +68,12 @@ window.onload = function(){
                             2 8 1  0 4 0  0 0 0
                             0 0 5  0 9 0  0 8 0
                             `;
-
         }
+
     }
    
    
-    let initString =    `
-                            0 0 0  0 0 0  0 0 0 
-                            0 0 0  0 0 0  0 0 0
-                            0 0 0  0 0 0  0 0 0
-                            0 0 0  0 0 0  0 0 0 
-                            0 0 0  0 0 0  0 0 0
-                            0 0 0  0 0 0  0 0 0
-                            0 0 0  0 0 0  0 0 0 
-                            0 0 0  0 0 0  0 0 0
-                            0 0 0  0 0 0  0 0 0
-                        `;
-
+    
 
     let  startValue = initString
             .split('')
@@ -283,12 +285,13 @@ window.onload = function(){
     }
 
     function getHtml(size){
-
+        let identificator = 0;
         // шаг 6 создадим инпуты
         // item - элемент массива
         for(let item of myBody){
             let imputElement = document.createElement('input')
             imputElement.classList.add("sudoku-cell");
+            imputElement.id = identificator++;
             imputElement.setAttribute('type', 'text');
             
             // шаг 7 прослушаем нашу ячейку

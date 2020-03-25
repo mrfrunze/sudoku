@@ -3,6 +3,7 @@
     flex-wrap: wrap;
 }
 
+
 .sudoku-segment {
     border: 1px solid gray;
     margin: 1px;
