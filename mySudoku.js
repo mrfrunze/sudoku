@@ -9,7 +9,6 @@ window.onload = function(){
             e.addEventListener('click', clickHandler, false);
         }
         
-        
     });
     
     function clickHandler(e){
