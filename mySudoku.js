@@ -24,7 +24,7 @@ window.onload = function(){
     });
     
     function clickHandler(e){
-            document.querySelector('#8').value = 9;
+            document.querySelector('#a8').value = 9;
             console.log(e.target.dataset);
             let target = e.target.dataset
 
@@ -54,19 +54,18 @@ window.onload = function(){
                             2 8 1  0 4 0  0 0 0
                             0 0 5  0 9 0  0 8 0
                         `;
-
             }
             if(e.target.dataset = 'height'){
                 initString = `
-                            5 5 3  9 5 4  6 7 5 
-                            0 9 0  2 5 0  8 3 1
-                            8 0 2  6 0 3  5 0 9
-                            9 2 0  3 7 0  0 1 5 
-                            0 0 8  0 2 0  7 6 0
-                            3 0 0  5 6 0  4 0 0
-                            4 6 0  0 0 0  1 0 7 
-                            2 8 1  0 4 0  0 0 0
-                            0 0 5  0 9 0  0 8 0
+                                5 5 3  9 5 4  6 7 5 
+                                0 9 0  2 5 0  8 3 1
+                                8 0 2  6 0 3  5 0 9
+                                9 2 0  3 7 0  0 1 5 
+                                0 0 8  0 2 0  7 6 0
+                                3 0 0  5 6 0  4 0 0
+                                4 6 0  0 0 0  1 0 7 
+                                2 8 1  0 4 0  0 0 0
+                                0 0 5  0 9 0  0 8 0
                             `;
         }
 
@@ -291,7 +290,7 @@ window.onload = function(){
         for(let item of myBody){
             let imputElement = document.createElement('input')
             imputElement.classList.add("sudoku-cell");
-            imputElement.id = identificator++;
+            imputElement.id = "a" + identificator++;
             imputElement.setAttribute('type', 'text');
             
             // шаг 7 прослушаем нашу ячейку
