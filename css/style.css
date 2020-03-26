@@ -50,3 +50,41 @@
 .sudoku-cell.error {
     color: red;
 }
+
+/* ************ form ************ */
+
+.container {
+    width: 650px;
+    margin: 100px auto;
+    background: #3333336b;
+}
+
+.form {
+    text-align: center;
+}
+
+.text, .pasw{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    margin: 10px 0;
+}
+
+#input-login, #input-pasword {
+    padding: 7px;
+    border-radius: 7px;
+    outline: none;
+    border: 2px solid #3333336b;
+}
+
+#input-login:focus, #input-pasword:focus{
+    border: 2px solid rgba(21, 189, 175, 0.856);
+}
+
+/* / ************ form *********** */
