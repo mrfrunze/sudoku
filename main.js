@@ -5,10 +5,10 @@ window.onload = function(){
         let pasw = document.querySelector('#input-pasword').value;
 
         if(log == "user"){
-            document.location.href = "sudoku.html";
+            document.location.replace = "sudoku.html";
 
             if(pasw == "1234"){
-                document.location.href = "sudoku.html";
+                document.location.replace = "sudoku.html";
                 alert("Авторизация успешна");
             }
         }

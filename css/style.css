@@ -87,4 +87,29 @@ label {
     border: 2px solid rgba(21, 189, 175, 0.856);
 }
 
+.btn {
+    outline: none;
+    padding: 5px 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border: 2px solid #03A9F4;
+    cursor: pointer;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -ms-border-radius:5px;
+    -o-border-radius:5px;
+    transition: all .9s;
+    -webkit-transition: all .9s;
+    -moz-transition: all .9s;
+    -ms-transition: all .9s;
+    -o-transition: all .9s;
+}
+
+.btn:hover{
+    border: 2px solid rgb(88, 188, 235);
+    background:#333;
+    color:#fff;
+}
+
 /* / ************ form *********** */
