@@ -1,6 +1,7 @@
 .sudoku-game {
     display: flex;
     flex-wrap: wrap;
+    margin: 50px auto;
 }
 
 
@@ -49,6 +50,13 @@
 
 .sudoku-cell.error {
     color: red;
+}
+
+.container-block{
+    width: 200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ************ form ************ */

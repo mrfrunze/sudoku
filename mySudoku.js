@@ -1,113 +1,201 @@
 window.onload = function(){
+    const config = {
+        size : 750,
+        difficult : {
+            "light" : 98,
+            "low" : 50,
+            "height" : 30
+        }
+    }
     
-    let initString =    `
-                            6 3 0  0 7 4  0 2 0 
-                            5 0 0  3 0 6  0 1 4
-                            8 2 4  5 1 0  0 6 0
-                            4 0 0  1 0 7  2 0 9 
-                            2 0 7  0 0 0  4 0 6
-                            0 9 0  6 4 2  2 0 7
-                            0 8 0  7 0 5  3 4 0 
-                            7 0 3  2 6 0  5 9 0
-                            0 5 2  0 8 3  0 0 1
-                        `;
+        //Замена в строке на подстроку
+        // первый аргументпозиция элемента с которого начать
+        // второй аргумент это вставить replacement на поз index
+        String.prototype.replaceAt = function(index, replacement) {
+            //  берем то что слева и то что српава и конкатенируем
+            return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+        }
+    
+        function getRandomNum(min, max){
+            return Math.floor(Math.random() * (max + 1 - min)+min);
+        }
+    
+        function transposing(sudoku){
+            return sudoku[0].map((col, i) => sudoku.map(row => row[i]))
+        }
+    
+        // меняем строки местами
+        function swap_rows(sudoku){
+            // console.log(sudoku);
+            // определяем первую строку
+            let n1 = getRandomNum(0, 8);
+            // вторая строка
+            let n2 = 0;
+            //Генерируется индекс строки основываясь на правилах построения судоку
+            if(n1 < 3) n2 = getRandomNum(0, 2)
+            else if(n1 < 6) n2 = getRandomNum(3, 5);
+            else n2 = getRandomNum(6, 8);
+            
+            for(let i = 0;i < sudoku.length;i++){
+                let tmp = sudoku[n2][i];
+                sudoku[n2][i] = sudoku[n1][i];
+                sudoku[n1][i] = tmp;
+            }
+            return sudoku;
+        }
+        
+        // меняем стролбцы местами
+        function swap_cols(sudoku){
+            sudoku = transposing(sudoku);
+            swap_rows(sudoku);
+            sudoku = transposing(sudoku);
+            return sudoku
+        }
+        function parseToStr(sudoku){
+            let str = "";
+            for(let i=0; i < sudoku.length; i++){
+                for(let j=0; j < sudoku.length; j++){
+                    str += sudoku[i][j];
+                } 
+            }
+            return str;
+        }
+        // len сколько раз перемешать
+        function mixSudoku(sudoku, len){
+            for(let i= 0; i < len; i++){
+                //с 70% шансов мешать строки
+                if(getRandomNum(1, 10) < 8){
+                    sudoku = swap_rows(sudoku);
+                }else{
+                //с 30% шансов мешать колонки
+                    sudoku = swap_cols(sudoku)
+                }
+            }
+            return sudoku;
+        }    
 
+    let myBody = [];
+    let initString = "";
+
+    
+    
 
     let btn = document.querySelectorAll(".btn");
-    console.log(btn);
+    // console.log(btn);
 
-    let btnElemnets =  btn.forEach(function(e){
+    btn.forEach(function(e){
         
         for(let i = 0; i < btn.length; i++){
             e.addEventListener('click', clickHandler, false);
         }
     });
     
-    function clickHandler(e){
-            document.querySelector('#a8').value = 9;
-            console.log(e.target.dataset);
-            let target = e.target.dataset
+    function clickHandler(e, first = false){
+        let sudoku = [
+                [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                [4, 5, 6, 7, 8, 9, 1, 2, 3],
+                [7, 8, 9, 1, 2, 3, 4, 5, 6],
+                [2, 3, 4, 5, 6, 7, 8, 9, 1],
+                [5, 6, 7, 8, 9, 1, 2, 3, 4],
+                [8, 9, 1, 2, 3, 4, 5, 6, 7],
+                [3, 4, 5, 6, 7, 8, 9, 1, 2],
+                [6, 7, 8, 9, 1, 2, 3, 4, 5],
+                [9, 1, 2, 3, 4, 5, 6, 7, 8]
+            ];
 
-            if(target = 'light'){
-                initString =
-                                `
-                                    5 0 3  0 0 4  6 7 0 
-                                    0 9 0  2 5 0  8 3 1
-                                    0 0 2  6 0 3  0 0 9
-                                    0 2 0  3 7 0  0 1 5 
-                                    0 0 8  0 2 0  7 6 0
-                                    3 0 0  5 6 0  0 0 0
-                                    4 6 0  0 0 0  1 0 7 
-                                    2 8 1  0 4 0  0 0 0
-                                    0 0 5  0 9 0  0 8 0
-                                `
-            }
-            if(e.target.dataset = 'low'){
-                initString = `
-                            5 6 3  9 7 4  6 7 8 
-                            0 9 0  2 5 0  8 3 1
-                            8 0 2  6 0 3  5 0 9
-                            9 2 0  3 7 0  0 1 5 
-                            0 0 8  0 2 0  7 6 0
-                            3 0 0  5 6 0  4 0 0
-                            4 6 0  0 0 0  1 0 7 
-                            2 8 1  0 4 0  0 0 0
-                            0 0 5  0 9 0  0 8 0
-                        `;
-            }
-            if(e.target.dataset = 'height'){
-                initString = `
-                                5 5 3  9 5 4  6 7 5 
-                                0 9 0  2 5 0  8 3 1
-                                8 0 2  6 0 3  5 0 9
-                                9 2 0  3 7 0  0 1 5 
-                                0 0 8  0 2 0  7 6 0
-                                3 0 0  5 6 0  4 0 0
-                                4 6 0  0 0 0  1 0 7 
-                                2 8 1  0 4 0  0 0 0
-                                0 0 5  0 9 0  0 8 0
-                            `;
+        sudoku = mixSudoku(sudoku, 200); //200 раз рандомно пермишать перемешать
+
+        sudoku = parseToStr(sudoku); //Перевод из массива в строку 
+
+        let target;
+        let coef; // коофициент заданого %
+        if (first) target = "light"
+        else target = e.target.dataset.btn;
+
+        if (target == "restart") {
+            generateMyBody();
+            return true;
         }
 
+        coef = config.difficult[target]; // обращаемся в config
+        let n = Math.floor(81 * ((100 - coef) * 0.01)); // n - сколкь ячеек занулить 100 - 30 * 0.01 = 0.7 0.7 * 81 = 56
+
+        let nums = [];
+        // заполняем от 0 до 81
+        for (let j = 0; j < 81; j++) nums[j] = j;
+
+        let dx = 0;
+        // проход по сегментам
+        for (let j = 0; j < n; j++) {
+            // делим на три сегмента верхний средний нижний
+            dx = dx % 9;
+            // параметр 
+            // let n1 = 100;
+            //  найти число котрое находится в верхних 3-х сегментах
+            while (true) {
+                // ф-ция принимает мин и макс
+                let num = (getRandomNum(dx, dx + 2) * 9) + getRandomNum(0, 8);
+                // nums - массив индексов 
+                // проверяем лижит ли сгенерированное число в массиве nums
+                // indexOf(num) - возвращает позицию в nums
+                if (sudoku[num] != "0") {
+                    //  модифицируем наш sudoku
+                    // replaceAt - первым параметром передает позицию с которой нужно начать модификацию второй параметр 0
+                    // таким образом мы заменяем число на ноль
+                    sudoku = sudoku.replaceAt(num, "0");
+                    // в массиве [num] - мы его зануляем и повторно использовать не можем
+                    nums[num] = 0;
+                    break;
+                }
+                // n1--;
+            }
+            dx += 3;
+        }
+        initString = sudoku;
+        generateMyBody();
     }
+    // вызываем сиксивенно первый клик
+    clickHandler(document.querySelector(".btn-1"), true)
    
-   
-    
+    function generateMyBody() {
 
-    let  startValue = initString
-            .split('')
-            .filter(x => '0123456789'.includes(x))
-            // шаг 21 превратим в цифры 
-            .map(x => Number(x))
-            console.log(startValue);
+        let  startValue = initString
+                .split('')
+                .filter(x => '0123456789'.includes(x))
+                // шаг 21 превратим в цифры 
+                .map(x => Number(x))
+                console.log(startValue);
 
-    let myBody = [];
-    // console.log(myBody);
         
-
-    let idCounter = 1;
-    for(let y = 0; y<9; y++){
-        for(let x=0; x<9; x++){
-            myBody.push({
-                id: idCounter,
-                x:x,
-                y:y,
-                number: startValue[idCounter -1], // отнимаем чтобы взять первую ячейку п позиции 0 
-                // шаг 9 добавим классы для ячеек с фокусом и без
-                selected: false,
-                supported: false,
-                // шаг 27 добавим поле не важно 
-                important: false,
-                // шаг 35
-                error: false,
-                // шаг 24  поле начала ячейки - является ли это поле началом ? startValue[idCounter -1]
-                started: startValue[idCounter -1] === 0 ? false : true,
-                s: parseInt(y / 3) * 3 + parseInt(x / 3)
-            })
-            idCounter++;
+        myBody = [];
+    
+        let idCounter = 1;
+        for(let y = 0; y<9; y++){
+            for(let x=0; x<9; x++){
+                myBody.push({
+                    id: idCounter,
+                    x:x,
+                    y:y,
+                    number: startValue[idCounter -1], // отнимаем чтобы взять первую ячейку п позиции 0 
+                    // шаг 9 добавим классы для ячеек с фокусом и без
+                    selected: false,
+                    supported: false,
+                    // шаг 27 добавим поле не важно 
+                    important: false,
+                    // шаг 35
+                    error: false,
+                    // шаг 24  поле начала ячейки - является ли это поле началом ? startValue[idCounter -1]
+                    started: startValue[idCounter -1] === 0 ? false : true,
+                    s: parseInt(y / 3) * 3 + parseInt(x / 3)
+                })
+                idCounter++;
+            }
+            // console.log(myBody);
         }
-        // console.log(myBody);
+        
+        getHtml(config.size);
     }
+
 
     // Создадим ф-ции быстрого доступа к ячейкам и строка
     function getRow(n){
@@ -280,17 +368,22 @@ window.onload = function(){
             cell.supported = false
             cell.error = false
         }
+        //Проверка на победу
+        let win = true;
+        for (let item of myBody) {
+            if (item.number == 0) win = false;
+        }
+        if (win && !cell.error) alert("Победа!!!");
         veiwUpdate();
     }
 
     function getHtml(size){
-        let identificator = 0;
+        let app = document.querySelector("#app").innerHTML = "";
         // шаг 6 создадим инпуты
         // item - элемент массива
         for(let item of myBody){
             let imputElement = document.createElement('input')
             imputElement.classList.add("sudoku-cell");
-            imputElement.id = "a" + identificator++;
             imputElement.setAttribute('type', 'text');
             
             // шаг 7 прослушаем нашу ячейку
@@ -314,7 +407,7 @@ window.onload = function(){
         div.style.height = `${size}px`;
         div.style["font-size"] = `${size/20}px`;
 
-        let app = document.querySelector("#app").append(div);
+        app = document.querySelector("#app").append(div);
         
         // шаг 4 создаем 9 сегментов 
         for (let s = 0; s < 9; s++) {
@@ -338,8 +431,6 @@ window.onload = function(){
         return div;
 
     }
-
-    getHtml(750);
 
     function veiwUpdate(){
         // шаг 13 проходим по всем ячейкам
@@ -371,10 +462,6 @@ window.onload = function(){
             }
         }
     }
-
-    
-
-        
 
 }
 
