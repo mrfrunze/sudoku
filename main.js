@@ -14,7 +14,8 @@ window.onload = function(){
         }
         else{
             alert("Вы ввели неправильно логин или пароль")
-            document.location.href = "index.html";
+            document
+            .location.href = "index.html";
         }
 
     }
